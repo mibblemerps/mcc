@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using McFuncCompiler.Command;
+using McFuncCompiler.Command.CompilerCommands;
 using McFuncCompiler.Command.Tokens;
 using McFuncCompiler.ParseAddons;
 

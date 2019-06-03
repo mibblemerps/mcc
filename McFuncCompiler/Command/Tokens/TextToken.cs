@@ -19,5 +19,10 @@ namespace McFuncCompiler.Command.Tokens
         {
             return Text;
         }
+
+        public override string ToString()
+        {
+            return Text;
+        }
     }
 }
