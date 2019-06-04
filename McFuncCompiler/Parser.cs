@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using McFuncCompiler.Command;
 using McFuncCompiler.Command.Tokens;
@@ -12,18 +14,32 @@ namespace McFuncCompiler
     public class Parser
     {
         protected McFunction McFunction;
+        protected BuildEnvironment Environment;
 
         protected List<IParseAddon> ParseAddons;
 
-        public McFunction Parse(string path, string code)
+        public Parser(BuildEnvironment env)
         {
+            Environment = env;
+        }
+
+        public McFunction Parse(string id, string code = null)
+        {
+            if (code == null)
+            {
+                // Load file from path in build environment
+                string path = Environment.GetPath(id, "mcfunction");
+                Logger.Debug($"Loading mcfunction file from \"{path}\"...");
+                code = File.ReadAllText(path);
+            }
+
             ParseAddons = new List<IParseAddon>
             {
                 new JsonImportParseAddon(),
                 new ConstantParseAddon()
             };
 
-            McFunction = new McFunction(path);
+            McFunction = new McFunction(id);
 
             // Iterate over lines in file
             foreach (string line in code.Split('\n'))

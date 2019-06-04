@@ -9,24 +9,16 @@ namespace McFuncCompiler.Command.Tokens
 {
     public class JsonImportToken : IToken
     {
-        public string Path { get; set; }
+        public string Id { get; set; }
 
-        public JsonImportToken(string path)
+        public JsonImportToken(string id)
         {
-            Path = path;
+            Id = id;
         }
 
         public string Compile(BuildEnvironment env)
         {
-            Path = Path.Replace('\\', '/').TrimStart('/').TrimEnd();
-
-            if (!Path.Substring(Math.Max(Path.IndexOf('/'), 0)).Contains('.'))
-            {
-                // No file extension, assume .json
-                Path += ".json";
-            }
-
-            return File.ReadAllText(env.Path + "/" + Path);
+            return File.ReadAllText(env.GetPath(Id, "json"));
         }
     }
 }

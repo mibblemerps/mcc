@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,18 +13,13 @@ namespace McFuncCompiler
     public class McFunction
     {
         /// <summary>
-        /// In-game path of this function - including the namespace.
+        /// In-game ID of this function - including the namespace.
         /// </summary>
-        public string Path { get; set; }
+        public string Id { get; set; }
 
         public List<Command.Command> Commands = new List<Command.Command>();
 
         public List<McFunction> ChildFunctions = new List<McFunction>();
-
-        /// <summary>
-        /// Compiled result is stored here.
-        /// </summary>
-        public string Compiled { get; private set; }
 
         private static List<ICustomCommand> CustomCommands = new List<ICustomCommand>
         {
@@ -33,15 +29,18 @@ namespace McFuncCompiler
 
         private const int FunctionBlockNestingLimit = 1000;
 
-        public McFunction(string path)
+        /// <summary>
+        /// Compiled cache.
+        /// </summary>
+        private string _compiled;
+
+        public McFunction(string id)
         {
-            Path = path;
+            Id = id;
         }
 
         public void Compile(BuildEnvironment env)
         {
-            if (Compiled != null) throw new Exception("Already compiled. To recompile, create a new McFunction with the parser.");
-
             // Apply custom commands
             var toRemove = new List<Command.Command>();
 
@@ -76,6 +75,14 @@ namespace McFuncCompiler
             // Split function blocks into seperate McFunctions
             SplitFunctionBlocks(env);
 
+            // Compile to vanilla MCFunction file
+            GenerateMcFunction(env);
+        }
+
+        public string GenerateMcFunction(BuildEnvironment env)
+        {
+            if (_compiled != null) return _compiled;
+
             // Compile to vanilla mcfunction
             var builder = new StringBuilder();
             foreach (Command.Command command in Commands)
@@ -89,7 +96,9 @@ namespace McFuncCompiler
                 builder.Append(argBuilder.ToString().Trim() + "\n");
             }
 
-            Compiled = builder.ToString();
+            _compiled = builder.ToString();
+
+            return _compiled;
         }
 
         /// <summary>
@@ -142,18 +151,40 @@ namespace McFuncCompiler
             int functionId = 0;
             foreach (Range range in functionBlocks)
             {
-                var mcFunction = new McFunction(Path + "__" + functionId++);
+                var mcFunction = new McFunction(Id + "__" + functionId++);
                 ChildFunctions.Add(mcFunction);
                 
                 // Move commands
                 mcFunction.Commands.AddRange(Commands.GetRange(range.Minimum + 1, range.Length - 1));
                 Commands.RemoveRange(range.Minimum, range.Length + 1);
-                Commands.Insert(range.Minimum, new Command.Command("function", mcFunction.Path));
+                Commands.Insert(range.Minimum, new Command.Command("function", mcFunction.Id));
 
-                Logger.Debug($"Function block \"{mcFunction.Path}\" created from commands {functionBlocks.Last()} in {Path}!");
+                Logger.Debug($"Function block \"{mcFunction.Id}\" created from commands {functionBlocks.Last()} in {Id}!");
 
                 // Run split function blocks on child so they can do their own function blocks.
                 mcFunction.SplitFunctionBlocks(env);
+            }
+        }
+
+        /// <summary>
+        /// Save this MCFunction and optionally it's children.
+        /// </summary>
+        /// <param name="env"></param>
+        /// <param name="saveChildren"></param>
+        public void Save(BuildEnvironment env, bool saveChildren = true)
+        {
+            string output = env.GetPath(Id, "mcfunction", env.OutputPath);
+            Directory.GetParent(output).Create();
+            File.WriteAllText(output, GenerateMcFunction(env));
+
+            Logger.Info("Saved to: " + output);
+
+            if (saveChildren)
+            {
+                foreach (McFunction function in ChildFunctions)
+                {
+                    function.Save(env);
+                }
             }
         }
     }
