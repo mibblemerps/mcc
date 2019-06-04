@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace McFuncCompiler
 {
@@ -17,7 +12,7 @@ namespace McFuncCompiler
             env.OutputPath = "../../TestData/datapack_compiled";
             env.Constants.Add("mcfunc_compiler_version", Version.ToString(2));
 
-            var parser = new Parser(env);
+            var parser = new Parser.Parser(env);
             McFunction mcFunction = parser.Parse("test_data:test");
 
             mcFunction.Compile(env);

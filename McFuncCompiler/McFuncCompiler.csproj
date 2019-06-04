@@ -45,7 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BuildEnvironment.cs" />
-    <Compile Include="CommandParser.cs" />
+    <Compile Include="Command\CommandParser.cs" />
     <Compile Include="Command\Argument.cs" />
     <Compile Include="Command\Command.cs" />
     <Compile Include="Command\CustomCommands\ApplyResult.cs" />
@@ -63,8 +63,8 @@
     <Compile Include="ParseAddons\IParseAddon.cs" />
     <Compile Include="ParseAddons\JsonImportParseAddon.cs" />
     <Compile Include="ParseAddons\ParseAddonResponse.cs" />
-    <Compile Include="Parser.cs" />
-    <Compile Include="ParseState.cs" />
+    <Compile Include="Parser\Parser.cs" />
+    <Compile Include="Parser\ParseState.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Range.cs" />

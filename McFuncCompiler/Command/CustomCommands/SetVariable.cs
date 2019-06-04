@@ -13,7 +13,10 @@ namespace McFuncCompiler.Command.CustomCommands
         
         public bool DoesApply(BuildEnvironment env, Command command)
         {
-            return Regex.IsMatch(command.GetCommandName(), Variable.VarRegex);
+            string name = command.GetCommandName();
+            if (name == null) return false;
+
+            return Regex.IsMatch(name, Variable.VarRegex);
         }
 
         public ApplyResult Apply(BuildEnvironment env, Command command)

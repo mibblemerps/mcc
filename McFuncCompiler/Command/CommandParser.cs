@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
-using McFuncCompiler.Command;
-using McFuncCompiler.Command.Tokens;
+using McFuncCompiler.Parser;
 
-namespace McFuncCompiler
+namespace McFuncCompiler.Command
 {
     public static class CommandParser
     {

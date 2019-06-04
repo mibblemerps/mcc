@@ -4,9 +4,11 @@ say Compiler version 0.1
 say Hello.
 scoreboard players set @s points 0
 scoreboard objectives add points dummy "Total Points"
+give mitchfizz05 iron_sword{"Damage":100} 1
 scoreboard players set var globals 50
 scoreboard players add var globals 10
 scoreboard players remove var globals 5
+say 3333
 scoreboard players set var globals 3333
 scoreboard players reset var globals
 scoreboard players set mitchfizz05 points 69
