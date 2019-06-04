@@ -152,7 +152,10 @@ namespace McFuncCompiler
             int functionId = 0;
             foreach (KeyValuePair<Argument, Range> range in functionBlocks)
             {
-                var mcFunction = new McFunction(Id + "__" + functionId++);
+                string parent = Id.Substring(0, Math.Max(Id.LastIndexOf("/"), Id.LastIndexOf(":")) + 1);
+                string name = Id.Substring(Math.Max(Id.LastIndexOf("/"), Id.LastIndexOf(":")) + 1);
+
+                var mcFunction = new McFunction(parent + "_funcblocks/" + name + "__" + functionId++);
                 ChildFunctions.Add(mcFunction);
                 
                 // Move commands
