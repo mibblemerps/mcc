@@ -35,9 +35,8 @@ namespace McFuncCompiler.Command
         {
             if (Arguments.Count == 0) return null;
             if (Arguments[0].Tokens.Count == 0) return null;
-            if (!(Arguments[0].Tokens[0] is TextToken)) return null;
 
-            return Arguments[0].Tokens[0].ToString();
+            return Arguments[0].GetAsText();
         }
     }
 }

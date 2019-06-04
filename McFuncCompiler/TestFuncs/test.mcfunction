@@ -1,8 +1,11 @@
 # Test
 setblock ~ ~ ~ air
-say Hello world
 
-define ping aaaaaaaaaaaa
+define test Hello.
+
+say Hello world
+say #ping
+say #test
 
 define standard_sword iron_sword`sword.json`
 
@@ -25,4 +28,8 @@ give @s #standard_sword 1
 
 execute as @a run tellraw @s `hello`
 
-say #ping
+
+
+(
+say test
+)

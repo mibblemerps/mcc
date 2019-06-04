@@ -28,5 +28,18 @@ namespace McFuncCompiler.Command
 
             return builder.ToString();
         }
+
+        /// <summary>
+        /// Get this argument a simple text form, if possible.<br />
+        /// For arguments with only text tokens, this will have the same output as Compile.
+        /// </summary>
+        public string GetAsText()
+        {
+            // All tokens must be simple text tokens
+            if (Tokens.Any(token => !(token is TextToken)))
+                return null;
+
+            return Compile(null);
+        }
     }
 }
