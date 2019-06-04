@@ -21,5 +21,10 @@ namespace McFuncCompiler
             Minimum = minimum;
             Maximum = maximum;
         }
+
+        public override string ToString()
+        {
+            return Minimum + "-" + Maximum;
+        }
     }
 }

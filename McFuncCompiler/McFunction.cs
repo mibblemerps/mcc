@@ -5,14 +5,25 @@ using System.Text;
 using System.Threading.Tasks;
 using McFuncCompiler.Command;
 using McFuncCompiler.Command.CustomCommands;
+using McFuncCompiler.Util;
 
 namespace McFuncCompiler
 {
     public class McFunction
     {
+        /// <summary>
+        /// In-game path of this function - including the namespace.
+        /// </summary>
+        public string Path { get; set; }
+
         public List<Command.Command> Commands = new List<Command.Command>();
 
         public List<McFunction> ChildFunctions = new List<McFunction>();
+
+        /// <summary>
+        /// Compiled result is stored here.
+        /// </summary>
+        public string Compiled { get; private set; }
 
         private static List<ICustomCommand> CustomCommands = new List<ICustomCommand>
         {
@@ -22,8 +33,15 @@ namespace McFuncCompiler
 
         private const int FunctionBlockNestingLimit = 1000;
 
-        public string Compile(BuildEnvironment env)
+        public McFunction(string path)
         {
+            Path = path;
+        }
+
+        public void Compile(BuildEnvironment env)
+        {
+            if (Compiled != null) throw new Exception("Already compiled. To recompile, create a new McFunction with the parser.");
+
             // Apply custom commands
             var toRemove = new List<Command.Command>();
 
@@ -56,13 +74,13 @@ namespace McFuncCompiler
             toRemove.Clear();
 
             // Split function blocks into seperate McFunctions
-            SplitFunctionBlocks();
+            SplitFunctionBlocks(env);
 
             // Compile to vanilla mcfunction
             var builder = new StringBuilder();
             foreach (Command.Command command in Commands)
             {
-                var argBuilder = new StringBuilder(); 
+                var argBuilder = new StringBuilder();
                 foreach (Argument arg in command.Arguments)
                 {
                     argBuilder.Append(arg.Compile(env) + " ");
@@ -71,13 +89,13 @@ namespace McFuncCompiler
                 builder.Append(argBuilder.ToString().Trim() + "\n");
             }
 
-            return builder.ToString();
+            Compiled = builder.ToString();
         }
 
         /// <summary>
         /// Search for function blocks and split them out into their own McFunctions.
         /// </summary>
-        public void SplitFunctionBlocks()
+        public void SplitFunctionBlocks(BuildEnvironment env)
         {
             // Iterate over commands, finding function blocks in the *root level*
             // We then make take those commands into their own McFunction and run this function again on the sub McFunction.
@@ -121,18 +139,21 @@ namespace McFuncCompiler
             if (nesting > 0) throw new Exception("Unclosed function block!");
 
             // Move commands into child McFunctions
+            int functionId = 0;
             foreach (Range range in functionBlocks)
             {
-                var mcFunction = new McFunction();
+                var mcFunction = new McFunction(Path + "__" + functionId++);
                 ChildFunctions.Add(mcFunction);
                 
                 // Move commands
                 mcFunction.Commands.AddRange(Commands.GetRange(range.Minimum + 1, range.Length - 1));
                 Commands.RemoveRange(range.Minimum, range.Length + 1);
-                Commands.Insert(range.Minimum, new Command.Command("function", "funcblock"));
+                Commands.Insert(range.Minimum, new Command.Command("function", mcFunction.Path));
+
+                Logger.Debug($"Function block \"{mcFunction.Path}\" created from commands {functionBlocks.Last()} in {Path}!");
 
                 // Run split function blocks on child so they can do their own function blocks.
-                mcFunction.SplitFunctionBlocks();
+                mcFunction.SplitFunctionBlocks(env);
             }
         }
     }

@@ -15,7 +15,7 @@ namespace McFuncCompiler
 
         protected List<IParseAddon> ParseAddons;
 
-        public McFunction Parse(string code)
+        public McFunction Parse(string path, string code)
         {
             ParseAddons = new List<IParseAddon>
             {
@@ -23,7 +23,7 @@ namespace McFuncCompiler
                 new ConstantParseAddon()
             };
 
-            McFunction = new McFunction();
+            McFunction = new McFunction(path);
 
             // Iterate over lines in file
             foreach (string line in code.Split('\n'))

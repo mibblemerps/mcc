@@ -30,6 +30,6 @@ execute as @a run tellraw @s `hello`
 
 
 
-(
-say test
+execute if score tier data matches 4.. run (
+	say test
 )
