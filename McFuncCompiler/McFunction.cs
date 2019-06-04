@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using McFuncCompiler.Command;
 using McFuncCompiler.Command.CustomCommands;
+using McFuncCompiler.Command.Tokens;
 using McFuncCompiler.Util;
 
 namespace McFuncCompiler
@@ -108,7 +109,7 @@ namespace McFuncCompiler
         {
             // Iterate over commands, finding function blocks in the *root level*
             // We then make take those commands into their own McFunction and run this function again on the sub McFunction.
-            var functionBlocks = new List<Range>();
+            var functionBlocks = new Dictionary<Argument, Range>();
             int nesting = 0;
             int i = 0;
             foreach (Command.Command command in Commands)
@@ -126,7 +127,7 @@ namespace McFuncCompiler
                     if (nesting == 1)
                     {
                         // Root level function block.
-                        functionBlocks.Add(new Range(i, -1));
+                        functionBlocks.Add(arg, new Range(i, -1));
                     }
                 }
                 if (argText == ")")
@@ -138,7 +139,7 @@ namespace McFuncCompiler
                     if (nesting == 0)
                     {
                         // Back to root nesting, close this function block
-                        functionBlocks.Last().Maximum = i;
+                        functionBlocks.Last().Value.Maximum = i;
                     }
                 }
 
@@ -149,15 +150,18 @@ namespace McFuncCompiler
 
             // Move commands into child McFunctions
             int functionId = 0;
-            foreach (Range range in functionBlocks)
+            foreach (KeyValuePair<Argument, Range> range in functionBlocks)
             {
                 var mcFunction = new McFunction(Id + "__" + functionId++);
                 ChildFunctions.Add(mcFunction);
                 
                 // Move commands
-                mcFunction.Commands.AddRange(Commands.GetRange(range.Minimum + 1, range.Length - 1));
-                Commands.RemoveRange(range.Minimum, range.Length + 1);
-                Commands.Insert(range.Minimum, new Command.Command("function", mcFunction.Id));
+                mcFunction.Commands.AddRange(Commands.GetRange(range.Value.Minimum + 1, range.Value.Length - 1));
+                Commands.RemoveRange(range.Value.Minimum + 1, range.Value.Length);
+
+                // Replace argument with function call
+                range.Key.Tokens.Clear();
+                range.Key.Tokens.Add(new TextToken("function " + mcFunction.Id));
 
                 Logger.Debug($"Function block \"{mcFunction.Id}\" created from commands {functionBlocks.Last()} in {Id}!");
 

@@ -12,4 +12,4 @@ scoreboard players reset var globals
 scoreboard players set mitchfizz05 points 69
 give @s iron_sword{"Damage":100} 1
 execute as @a run tellraw @s ["",{"text":"[Big Brother] ","bold":true,"color":"light_purple"},"Hello ",{"selector":"@s"},"."]
-function test_data:test__0
+execute if score tier data matches 4.. run function test_data:test__0
