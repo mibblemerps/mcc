@@ -38,7 +38,7 @@ $points -= 1
 
 
 ### IMPORT JSON ###
-give @s iron_sword 1 `sword_nbt.json`
+give @s iron_sword`sword_nbt.json` 1
 
 
 ### DELAY ###

@@ -13,6 +13,13 @@ $var = 50
 $var += 10
 $var -= 5
 
+define somevalue 3333
+
+$var = #somevalue
+#$error = string
+
+points$mitchfizz05 = 69
+
 give @s #standard_sword 1
 
 execute as @a run tellraw @s `hello`
