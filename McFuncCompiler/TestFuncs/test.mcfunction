@@ -17,6 +17,7 @@ define somevalue 3333
 
 $var = #somevalue
 #$error = string
+$var = null
 
 points$mitchfizz05 = 69
 
