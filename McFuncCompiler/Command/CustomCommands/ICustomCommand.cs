@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace McFuncCompiler.Command.CompilerCommands
+﻿namespace McFuncCompiler.Command.CustomCommands
 {
     /// <summary>
     /// A command that should be run by the compiler, then stripped from the output.
     /// </summary>
-    public interface ICompilerCommand
+    public interface ICustomCommand
     {
+        /// <summary>
+        /// Is this a compiler command? If so, the command will be stripped from the final output.
+        /// </summary>
+        bool CompilerOnly { get; }
+
         /// <summary>
         /// Check if the provided command matches this compiler command.
         /// </summary>
@@ -24,6 +23,7 @@ namespace McFuncCompiler.Command.CompilerCommands
         /// </summary>
         /// <param name="env"></param>
         /// <param name="command"></param>
-        void Apply(BuildEnvironment env, Command command);
+        /// <returns>Apply result</returns>
+        ApplyResult Apply(BuildEnvironment env, Command command);
     }
 }

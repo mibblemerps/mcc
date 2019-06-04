@@ -11,6 +11,15 @@ namespace McFuncCompiler.Command
     {
         public List<IToken> Tokens = new List<IToken>();
 
+        public Argument()
+        {
+        }
+
+        public Argument(string arg)
+        {
+            Tokens.Add(new TextToken(arg));
+        }
+
         public string Compile(BuildEnvironment env)
         {
             StringBuilder builder = new StringBuilder();

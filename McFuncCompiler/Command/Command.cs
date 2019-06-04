@@ -14,6 +14,18 @@ namespace McFuncCompiler.Command
     {
         public List<Argument> Arguments = new List<Argument>();
 
+        public Command()
+        {
+        }
+
+        public Command(params string[] args)
+        {
+            foreach (string arg in args)
+            {
+                Arguments.Add(new Argument(arg));
+            }
+        }
+
         /// <summary>
         /// Get the name of the command.<br />
         /// This requires the first token to be a <see cref="TextToken"/>.

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using McFuncCompiler.Command;
-using McFuncCompiler.Command.CompilerCommands;
+using McFuncCompiler.Command.CustomCommands;
 
 namespace McFuncCompiler
 {
@@ -12,25 +12,38 @@ namespace McFuncCompiler
     {
         public List<Command.Command> Commands = new List<Command.Command>();
 
-        private static List<ICompilerCommand> CompilerCommands = new List<ICompilerCommand>
+        private static List<ICustomCommand> CustomCommands = new List<ICustomCommand>
         {
-            new DefineConstant()
+            new DefineConstant(),
+            new SetVariable()
         };
 
         public string Compile(BuildEnvironment env)
         {
-            // Execute compiler commands
+            // Apply custom commands
             var toRemove = new List<Command.Command>();
-            foreach (Command.Command command in Commands)
+
+            int i = 0;
+            while (i < Commands.Count)
             {
-                foreach (ICompilerCommand compilerCommand in CompilerCommands)
+                Command.Command command = Commands[i];
+
+                foreach (ICustomCommand customCommand in CustomCommands)
                 {
-                    if (compilerCommand.DoesApply(env, command))
+                    if (customCommand.DoesApply(env, command))
                     {
-                        compilerCommand.Apply(env, command);
-                        toRemove.Add(command);
+                        ApplyResult result = customCommand.Apply(env, command);
+
+                        // Strip command from output if requested
+                        if (result.StripFromOutput)
+                            toRemove.Add(command);
+
+                        // Add replacement commands
+                        Commands.InsertRange(i + 1, result.AddCommands);
                     }
                 }
+
+                i++;
             }
 
             // Remove compiler commands (they are not meant for the output)

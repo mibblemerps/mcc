@@ -15,6 +15,8 @@ namespace McFuncCompiler
         public BuildEnvironment(string path)
         {
             Path = path;
+
+            Constants.Add("globals_scoreboard", "globals");
         }
     }
 }
