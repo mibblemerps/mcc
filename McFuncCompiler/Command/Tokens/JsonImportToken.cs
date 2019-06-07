@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using McFuncCompiler.Parser.NbtJson;
 
 namespace McFuncCompiler.Command.Tokens
 {
@@ -18,7 +15,29 @@ namespace McFuncCompiler.Command.Tokens
 
         public string Compile(BuildEnvironment env)
         {
-            return File.ReadAllText(env.GetPath(Id, "json"));
+            string path = env.GetPath(Id, "json");
+            string file = File.ReadAllText(path);
+
+            if (path.EndsWith(".json") || path.EndsWith(".nbt"))
+            {
+                // Treat as NBT JSON
+                // Parse and recompile to put onto one line and ensure formatting is correct
+                try
+                {
+                    object nbt = NbtJsonParser.Parse(file);
+                    string compiledNbt = nbt.ToString();
+
+                    Logger.Debug($"Sucessfully parsed {Id} as NBT.");
+
+                    return compiledNbt;
+                }
+                catch (Exception e)
+                {
+                    Logger.Warning($"Resource {Id} isn't valid NBT! " + e.Message);
+                }
+            }
+            
+            return file;
         }
     }
 }

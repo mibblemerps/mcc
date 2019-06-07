@@ -1,6 +1,8 @@
 # Test
 setblock ~ ~ ~ air
 
+say `test_data:string.json`
+
 define test Hello.
 
 say Hello world
@@ -29,6 +31,8 @@ $var = null
 points$mitchfizz05 = 69
 
 give @s #standard_sword 1
+
+summon minecraft:villager ~ ~ ~ `test_data:villager.json`
 
 execute as @a run tellraw @s `test_data:hello`
 

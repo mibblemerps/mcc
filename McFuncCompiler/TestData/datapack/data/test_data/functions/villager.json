@@ -1,8 +1,8 @@
 {
 	VillagerData: {
-		profession:nitwit,
+		profession:"nitwit",
 		level:99,
-		type:plains
+		type:"plains"
 	},
 	Invulnerable:1,
 	PersistenceRequired:1,
@@ -21,7 +21,8 @@
 			{buy: {id:emerald, Count:4}, sell: {id:melon_slice,Count:6}, maxUses: 9999999},
 			{buy: {id:emerald, Count:4}, sell: {id:cookie,Count:12}, maxUses: 9999999},
 			{buy: {id:emerald, Count:12}, sell: {id:sugar,Count:16}, maxUses: 9999999},
-			{buy: {id:emerald, Count:1}, sell: {id:bowl,Count:1}, maxUses: 9999999}
+			{buy: {id:emerald, Count:1}, sell: {id:bowl,Count:1}, maxUses: 9999999},
+			{buy: {id:emerald, Count:64}, sell: {id:enchanted_golden_apple,Count:1}, maxUses: 9999999}
 		]
 	}
 }
