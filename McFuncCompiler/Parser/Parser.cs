@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using McFuncCompiler.Command;
 using McFuncCompiler.Command.Tokens;
-using McFuncCompiler.ParseAddons;
+using McFuncCompiler.Parser.ParseAddons;
 
 namespace McFuncCompiler.Parser
 {

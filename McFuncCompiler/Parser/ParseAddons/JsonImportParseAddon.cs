@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 using McFuncCompiler.Command;
 using McFuncCompiler.Command.Tokens;
 
-namespace McFuncCompiler.ParseAddons
+namespace McFuncCompiler.Parser.ParseAddons
 {
     public class JsonImportParseAddon : IParseAddon
     {

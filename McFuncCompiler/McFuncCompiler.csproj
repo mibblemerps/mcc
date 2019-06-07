@@ -62,10 +62,10 @@
     <Compile Include="Command\Tokens\TextToken.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="McFunction.cs" />
-    <Compile Include="ParseAddons\ConstantParseAddon.cs" />
-    <Compile Include="ParseAddons\IParseAddon.cs" />
-    <Compile Include="ParseAddons\JsonImportParseAddon.cs" />
-    <Compile Include="ParseAddons\ParseAddonResponse.cs" />
+    <Compile Include="Parser\ParseAddons\ConstantParseAddon.cs" />
+    <Compile Include="Parser\ParseAddons\IParseAddon.cs" />
+    <Compile Include="Parser\ParseAddons\JsonImportParseAddon.cs" />
+    <Compile Include="Parser\ParseAddons\ParseAddonResponse.cs" />
     <Compile Include="Parser\NbtJson\NbtCompoundTag.cs" />
     <Compile Include="Parser\NbtJson\NbtJsonCompiler.cs" />
     <Compile Include="Parser\NbtJson\NbtJsonException.cs" />
