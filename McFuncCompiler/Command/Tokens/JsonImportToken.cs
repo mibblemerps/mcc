@@ -22,7 +22,7 @@ namespace McFuncCompiler.Command.Tokens
             {
                 // Treat as NBT JSON
                 // Parse and recompile to put onto one line and ensure formatting is correct
-                try
+                //try
                 {
                     object nbt = NbtJsonParser.Parse(file);
                     string compiledNbt = nbt.ToString();
@@ -31,10 +31,10 @@ namespace McFuncCompiler.Command.Tokens
 
                     return compiledNbt;
                 }
-                catch (Exception e)
-                {
-                    Logger.Warning($"Resource {Id} isn't valid NBT! " + e.Message);
-                }
+//                catch (Exception e)
+//                {
+//                    Logger.Warning($"Resource {Id} isn't valid NBT! " + e.Message);
+//                }
             }
             
             return file;

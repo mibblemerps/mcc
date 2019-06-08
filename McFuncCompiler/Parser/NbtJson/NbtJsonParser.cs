@@ -298,7 +298,7 @@ namespace McFuncCompiler.Parser.NbtJson
                 dynamic value = ReadValue();
 
                 Type type = value.GetType();
-                if (type.GetGenericTypeDefinition() == typeof(NbtNumber<>))
+                if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(NbtNumber<>))
                     type = value.Type;
 
                 if (listType == null)
