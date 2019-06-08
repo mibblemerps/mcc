@@ -8,34 +8,39 @@ namespace McFuncCompiler.Parser.NbtJson
 {
     public class NbtCompoundTag : Dictionary<string, object>
     {
-        public long GetLong(string key)
+        public NbtString GetString(string key)
         {
-            return (long) this[key];
+            return (NbtString) this[key];
         }
 
-        public int GetInt(string key)
+        public NbtNumber<long> GetLong(string key)
         {
-            return (int) this[key];
+            return (NbtNumber<long>) this[key];
         }
 
-        public short GetShort(string key)
+        public NbtNumber<int> GetInt(string key)
         {
-            return (short) this[key];
+            return (NbtNumber<int>)this[key];
         }
 
-        public byte GetByte(string key)
+        public NbtNumber<short> GetShort(string key)
         {
-            return (byte) this[key];
+            return (NbtNumber<short>)this[key];
         }
 
-        public float GetFloat(string key)
+        public NbtNumber<byte> GetByte(string key)
         {
-            return (float) this[key];
+            return (NbtNumber<byte>)this[key];
         }
 
-        public double GetDouble(string key)
+        public NbtNumber<float> GetFloat(string key)
         {
-            return (double) this[key];
+            return (NbtNumber<float>)this[key];
+        }
+
+        public NbtNumber<double> GetDouble(string key)
+        {
+            return (NbtNumber<double>)this[key];
         }
 
         public NbtCompoundTag GetTag(string key)

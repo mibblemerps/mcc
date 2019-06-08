@@ -10,9 +10,12 @@ namespace McFuncCompiler.Parser.NbtJson
     {
         public T Value { get; }
 
+        public Type Type { get; }
+
         public NbtNumber(T value)
         {
             Value = value;
+            Type = typeof(T);
         }
 
         public override string ToString()

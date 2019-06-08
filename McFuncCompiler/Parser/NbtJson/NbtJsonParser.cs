@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
@@ -17,13 +18,13 @@ namespace McFuncCompiler.Parser.NbtJson
             System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.Compiled | System.Text.RegularExpressions.RegexOptions.Multiline;
 
         // Value regex patterns
-        public static Regex LongRegex = new Regex("[-+]?(?:0|[1-9][0-9]*)l", RegexOptions);
-        public static Regex IntRegex = new Regex("[-+]?(?:0|[1-9][0-9]*)", RegexOptions);
-        public static Regex ShortRegex = new Regex("[-+]?(?:0|[1-9][0-9]*)s", RegexOptions);
-        public static Regex ByteRegex = new Regex("[-+]?(?:0|[1-9][0-9]*)b", RegexOptions);
-        public static Regex FloatRegex = new Regex("[-+]?(?:[0-9]+[.]?|[0-9]*[.][0-9]+)(?:e[-+]?[0-9]+)?f", RegexOptions);
-        public static Regex DoubleNoSuffixRegex = new Regex(@"[-+]?(?:[0-9]+[.]|[0-9]*[.][0-9]+)(?:e[-+]?[0-9]+)?", RegexOptions);
-        public static Regex DoubleRegex = new Regex("[-+]?(?:[0-9]+[.]?|[0-9]*[.][0-9]+)(?:e[-+]?[0-9]+)?d", RegexOptions);
+        public static Regex LongRegex = new Regex("^[-+]?(?:0|[1-9][0-9]*)l$", RegexOptions);
+        public static Regex IntRegex = new Regex("^[-+]?(?:0|[1-9][0-9]*)$", RegexOptions);
+        public static Regex ShortRegex = new Regex("^[-+]?(?:0|[1-9][0-9]*)s$", RegexOptions);
+        public static Regex ByteRegex = new Regex("^[-+]?(?:0|[1-9][0-9]*)b$", RegexOptions);
+        public static Regex FloatRegex = new Regex("^[-+]?(?:[0-9]+[.]?|[0-9]*[.][0-9]+)(?:e[-+]?[0-9]+)?f$", RegexOptions);
+        public static Regex DoubleNoSuffixRegex = new Regex(@"^[-+]?(?:[0-9]+[.]|[0-9]*[.][0-9]+)(?:e[-+]?[0-9]+)?$", RegexOptions);
+        public static Regex DoubleRegex = new Regex("^[-+]?(?:[0-9]+[.]?|[0-9]*[.][0-9]+)(?:e[-+]?[0-9]+)?d$", RegexOptions);
 
         public static Regex AllowedInKey = new Regex(@"[\d\w_\-\.\+]", RegexOptions.Compiled);
         public static Regex IsValidUnquotedString = new Regex(@"^[\d\w_\-\.\+]+$", RegexOptions.Compiled);
@@ -293,14 +294,18 @@ namespace McFuncCompiler.Parser.NbtJson
 
             while (Peek() != ']')
             {
-                object value = ReadValue();
+                dynamic value = ReadValue();
+
+                Type type = value.GetType();
+                if (type.GetGenericTypeDefinition() == typeof(NbtNumber<>))
+                    type = value.Type;
 
                 if (listType == null)
                 {
                     // Set this list's type to the type of the first value
                     listType = value.GetType();
                 }
-                else if (enforceListType && value.GetType() != listType)
+                else if (enforceListType && type != listType)
                 {
                     throw new NbtJsonException($"Attempt to insert {value.GetType().Name} into a {listType.Name} list");
                 }
