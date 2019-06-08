@@ -62,7 +62,6 @@
     <Compile Include="Command\Tokens\TextToken.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="McFunction.cs" />
-    <Compile Include="Parser\ParseAddons\ConstantParseAddon.cs" />
     <Compile Include="Parser\ParseAddons\IParseAddon.cs" />
     <Compile Include="Parser\ParseAddons\JsonImportParseAddon.cs" />
     <Compile Include="Parser\ParseAddons\ParseAddonResponse.cs" />
@@ -75,6 +74,7 @@
     <Compile Include="Parser\NbtJson\NbtString.cs" />
     <Compile Include="Parser\ParseFilters\ConstantParseFilter.cs" />
     <Compile Include="Parser\ParseFilters\IParseFilter.cs" />
+    <Compile Include="Parser\ParseFilters\JsonImportParseFilter.cs" />
     <Compile Include="Parser\Parser.cs" />
     <Compile Include="Parser\ParseState.cs" />
     <Compile Include="Program.cs" />

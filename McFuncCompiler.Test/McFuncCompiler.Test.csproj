@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConstantParseFilterTest.cs" />
+    <Compile Include="JsonImportParseFilterTest.cs" />
     <Compile Include="NbtJsonCompilerTest.cs" />
     <Compile Include="NbtJsonParserTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
