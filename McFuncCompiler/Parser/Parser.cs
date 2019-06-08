@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using McFuncCompiler.Command;
 using McFuncCompiler.Command.Tokens;
-using McFuncCompiler.Parser.ParseAddons;
+using McFuncCompiler.Parser.ParseFilters;
 
 namespace McFuncCompiler.Parser
 {
@@ -11,8 +10,11 @@ namespace McFuncCompiler.Parser
     {
         protected McFunction McFunction;
         protected BuildEnvironment Environment;
-
-        protected List<IParseAddon> ParseAddons;
+        
+        protected List<IParseFilter> ParseFilters = new List<IParseFilter>
+        {
+            new ConstantParseFilter()
+        };
 
         public Parser(BuildEnvironment env)
         {
@@ -29,12 +31,6 @@ namespace McFuncCompiler.Parser
                 code = File.ReadAllText(path);
             }
 
-            ParseAddons = new List<IParseAddon>
-            {
-                new JsonImportParseAddon(),
-                new ConstantParseAddon()
-            };
-
             McFunction = new McFunction(id);
 
             // Iterate over lines in file
@@ -46,65 +42,24 @@ namespace McFuncCompiler.Parser
                 if (parts == null)
                     continue;
 
+                // Parse command into arguments
                 var cmd = new Command.Command();
-
                 foreach (string part in parts)
                 {
                     Argument argument = new Argument();
+                    argument.Tokens.Add(new TextToken(part));
 
-                    StringBuilder builder = new StringBuilder();
-                    bool escaped = false;
+                    // Run argument through filters
+                    foreach (IParseFilter filter in ParseFilters)
+                        argument = filter.FilterArgument(argument);
 
-                    foreach (char c in part + (char) 0)
-                    {
-                        // Skip parsing on escaped characters
-                        if (escaped && c != 0)
-                        {
-                            builder.Append(c);
-                            escaped = false;
-                            continue;
-                        }
-
-                        // Check for escape character
-                        if (c == '\\')
-                        {
-                            escaped = true;
-                            continue;
-                        }
-
-                        // Allow any parse addons to do their work.
-                        bool handled = false;
-                        foreach (IParseAddon parseAddon in ParseAddons)
-                        {
-                            ParseAddonResponse resp = parseAddon.OnCharacter(cmd, argument, builder, c);
-                            if (resp == ParseAddonResponse.Handled || resp == ParseAddonResponse.HandledClearBuffer)
-                                handled = true;
-
-                            if (resp == ParseAddonResponse.HandledClearBuffer && builder.Length > 0)
-                            {
-                                // Parse addon has requested we flush the current buffer
-                                argument.Tokens.Add(new TextToken(builder.ToString()));
-                                builder.Clear();
-                            }
-                        }
-                        
-                        if (c != 0 && !handled)
-                        {
-                            // No parse addons handled anything, treat as plaintext and append to buffer as normal.
-                            builder.Append(c);
-                        }
-                    }
-
-                    if (builder.Length > 0)
-                    {
-                        // There is stuff left in the buffer, output it to a text token
-                        argument.Tokens.Add(new TextToken(builder.ToString()));
-                        builder.Clear();
-                    }
-
-                    // Finished parsing argument
-                    cmd.Arguments.Add(argument);
+                    if (argument != null)
+                        cmd.Arguments.Add(argument);
                 }
+
+                // Run command through filters
+                foreach (IParseFilter filter in ParseFilters)
+                    cmd = filter.Filter(cmd);
 
                 McFunction.Commands.Add(cmd);
             }

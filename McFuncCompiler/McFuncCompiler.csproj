@@ -73,6 +73,8 @@
     <Compile Include="Parser\NbtJson\NbtList.cs" />
     <Compile Include="Parser\NbtJson\NbtNumber.cs" />
     <Compile Include="Parser\NbtJson\NbtString.cs" />
+    <Compile Include="Parser\ParseFilters\ConstantParseFilter.cs" />
+    <Compile Include="Parser\ParseFilters\IParseFilter.cs" />
     <Compile Include="Parser\Parser.cs" />
     <Compile Include="Parser\ParseState.cs" />
     <Compile Include="Program.cs" />
