@@ -155,7 +155,10 @@ namespace McFuncCompiler
                 string parent = Id.Substring(0, Math.Max(Id.LastIndexOf("/"), Id.LastIndexOf(":")) + 1);
                 string name = Id.Substring(Math.Max(Id.LastIndexOf("/"), Id.LastIndexOf(":")) + 1);
 
-                var mcFunction = new McFunction(parent + "_funcblocks/" + name + "__" + functionId++);
+                if (!parent.EndsWith("_subs/"))
+                    parent += "_subs/";
+
+                var mcFunction = new McFunction(parent + name + "_" + functionId++);
                 ChildFunctions.Add(mcFunction);
                 
                 // Move commands
