@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using McFuncCompiler.Parser.NbtJson;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace McFuncCompiler.Command.Tokens
 {
@@ -18,7 +20,7 @@ namespace McFuncCompiler.Command.Tokens
             string path = env.GetPath(Id, "json");
             string file = File.ReadAllText(path);
 
-            if (path.EndsWith(".json") || path.EndsWith(".nbt"))
+            if (path.EndsWith(".nbt"))
             {
                 // Treat as NBT JSON
                 // Parse and recompile to put onto one line and ensure formatting is correct
@@ -36,7 +38,26 @@ namespace McFuncCompiler.Command.Tokens
                     Logger.Warning($"Resource {Id} isn't valid NBT! " + e.Message);
                 }
             }
-            
+            else if (path.EndsWith(".json"))
+            {
+                // Treat as real JSON
+                // Parse and recompile to put onto one line and ensure formatting is correct
+                try
+                {
+                    object deserialized = JsonConvert.DeserializeObject(file);
+
+                    string json = JsonConvert.SerializeObject(deserialized, Formatting.None);
+
+                    Logger.Debug($"Sucessfully parsed {Id} as JSON.");
+
+                    return json;
+                }
+                catch (Exception e)
+                {
+                    Logger.Warning($"Resource {Id} isn't valid JSON! " + e.Message);
+                }
+            }
+
             return file;
         }
     }

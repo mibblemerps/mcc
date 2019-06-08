@@ -45,9 +45,17 @@ namespace McFuncCompiler
             string funcNamespace = match.Groups[1].Value;
             string funcPath = match.Groups[2].Value;
 
-            // Add .mcfunction if it isn't there already
-            if (!funcPath.EndsWith("." + extension))
-                funcPath += "." + extension;
+            string funcFileName = funcPath.Substring(Math.Max(funcPath.LastIndexOf('/'), 0));
+            string funcExtension = null;
+            if (funcFileName.Contains('.'))
+                funcExtension = funcPath.Substring(funcFileName.LastIndexOf('.'));
+
+            if (funcExtension == null)
+            {
+                // Add extension if there is none
+                if (!funcPath.EndsWith("." + extension))
+                    funcPath += "." + extension;
+            }
 
             return $"{rootPath.Replace('\\', '/').TrimEnd('/')}/data/{funcNamespace}/functions/{funcPath}";
         }
