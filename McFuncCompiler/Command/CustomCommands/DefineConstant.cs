@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace McFuncCompiler.Command.CustomCommands
 {
@@ -16,14 +17,22 @@ namespace McFuncCompiler.Command.CustomCommands
 
         public ApplyResult Apply(BuildEnvironment env, Command command)
         {
-            if (command.Arguments.Count < 2 || command.Arguments.Count > 3)
+            if (command.Arguments.Count < 2)
                 throw new Exception("Incorrect usage of 'define'!"); // todo: change exception
 
             string name = command.Arguments[1].Compile(env);
             string value = "true";
 
-            if (command.Arguments.Count == 3)
-                value = command.Arguments[2].Compile(env);
+            if (command.Arguments.Count >= 3)
+            {
+                var builder = new StringBuilder();
+                for (var i = 2; i < command.Arguments.Count; i++)
+                {
+                    builder.Append(command.Arguments[i].Compile(env) + " ");
+                }
+
+                value = builder.ToString();
+            }
 
             env.Constants[name] = value;
 

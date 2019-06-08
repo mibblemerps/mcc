@@ -26,6 +26,7 @@ namespace McFuncCompiler
             Path = path;
 
             Constants.Add("globals_scoreboard", "globals");
+            Constants.Add("compiled_header", "Compiled {file} at {date} by McFuncCompiler");
         }
 
         /// <summary>

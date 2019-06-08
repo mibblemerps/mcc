@@ -86,6 +86,14 @@ namespace McFuncCompiler
 
             // Compile to vanilla mcfunction
             var builder = new StringBuilder();
+
+            // Append header
+            string header = env.Constants["compiled_header"];
+            header = header.Replace("{date}", DateTime.Now.ToString("yyyy-MM-dd HH:mm"));
+            header = header.Replace("{file}", Id);
+            builder.Append("# " + header + "\n");
+
+            // Compile commands
             foreach (Command.Command command in Commands)
             {
                 var argBuilder = new StringBuilder();

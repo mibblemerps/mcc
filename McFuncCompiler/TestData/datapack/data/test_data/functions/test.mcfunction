@@ -5,6 +5,8 @@ say `test_data:string.txt`
 
 define test Hello.
 
+define compiled_header File {file}
+
 say Hello world
 say Compiler version #mcfunc_compiler_version
 say #test
