@@ -28,6 +28,15 @@ namespace McFuncCompiler.Test
         }
 
         [Test]
+        public void TestQuotedStringDanglingEscape()
+        {
+            Assert.That(() =>
+            {
+                NbtJsonParser.Parse("\"hello \\ world\"");
+            }, Throws.Exception);
+        }
+
+        [Test]
         public void TestIntTag()
         {
             NbtNumber<int> number = (NbtNumber<int>) NbtJsonParser.Parse("10");
