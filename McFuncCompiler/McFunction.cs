@@ -116,9 +116,8 @@ namespace McFuncCompiler
             {
                 Argument arg = command.Arguments.LastOrDefault();
                 if (arg == null) continue;
-                string argText = arg.GetAsText();
 
-                if (argText == "(")
+                if (arg.Tokens.FirstOrDefault() is OpenFunctionBlockToken)
                 {
                     nesting++;
 
@@ -130,7 +129,8 @@ namespace McFuncCompiler
                         functionBlocks.Add(arg, new Range(i, -1));
                     }
                 }
-                if (argText == ")")
+
+                if (arg.Tokens.FirstOrDefault() is CloseFunctionBlockToken)
                 {
                     nesting--;
 
@@ -166,7 +166,7 @@ namespace McFuncCompiler
                 range.Key.Tokens.Clear();
                 range.Key.Tokens.Add(new TextToken("function " + mcFunction.Id));
 
-                Logger.Debug($"Function block \"{mcFunction.Id}\" created from commands {functionBlocks.Last()} in {Id}!");
+                Logger.Debug($"Function block \"{mcFunction.Id}\" created from commands {functionBlocks.Last().Value} in {Id}!");
 
                 // Run split function blocks on child so they can do their own function blocks.
                 mcFunction.SplitFunctionBlocks(env);

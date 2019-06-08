@@ -15,10 +15,12 @@ namespace McFuncCompiler.Command
         {
         }
 
-        public Argument(string arg)
+        public Argument(IToken token)
         {
-            Tokens.Add(new TextToken(arg));
+            Tokens.Add(token);
         }
+
+        public Argument(string arg) : this(new TextToken(arg)) { }
 
         public string Compile(BuildEnvironment env)
         {

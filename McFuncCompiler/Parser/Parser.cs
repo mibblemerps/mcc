@@ -14,7 +14,8 @@ namespace McFuncCompiler.Parser
         protected List<IParseFilter> ParseFilters = new List<IParseFilter>
         {
             new ConstantParseFilter(),
-            new JsonImportParseFilter()
+            new JsonImportParseFilter(),
+            new FunctionBlockParseFilter()
         };
 
         public Parser(BuildEnvironment env)
