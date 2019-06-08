@@ -60,8 +60,8 @@ namespace McFuncCompiler.Parser.NbtJson
                     builder.Append(",");
                 first = false;
 
-                // Append key
-                builder.Append(child.Key + ":");
+                // Append key - convert to an NbtString as this will output a safe quoted string if necessary
+                builder.Append(new NbtString(child.Key) + ":");
 
                 // Append value
                 builder.Append(child.Value);

@@ -22,13 +22,11 @@ namespace McFuncCompiler.Parser.NbtJson
 
         public override string ToString()
         {
-            var builder = new StringBuilder();
+            var builder = new StringBuilder("[");
 
-            if (Type == typeof(object))
+            if (Type != null)
             {
                 // Non-generic list (array)
-                builder.Append("[");
-
                 if (Type == typeof(byte)) builder.Append("B");
                 if (Type == typeof(int)) builder.Append("I");
                 if (Type == typeof(long)) builder.Append("L");
@@ -37,7 +35,7 @@ namespace McFuncCompiler.Parser.NbtJson
             }
 
             // Build list
-            builder.Append("[" + string.Join(",", this) + "]");
+            builder.Append(string.Join(",", this) + "]");
 
             return builder.ToString();
         }

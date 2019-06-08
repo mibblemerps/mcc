@@ -39,21 +39,22 @@ namespace McFuncCompiler.Parser.NbtJson
 
         public static object Parse(string json)
         {
-            return new NbtJsonParser(json).ReadValue();
+            return new NbtJsonParser(json).ReadSingleValue();
         }
 
         /// <summary>
-        /// Read a single tag, and throw an exception if there is any trailing data.
+        /// Read a single value (any type; compound, list, literal, etc..) and throw an exception if there is any trailing data.
         /// </summary>
-        private NbtCompoundTag ReadSingleTag()
+        private object ReadSingleValue()
         {
-            NbtCompoundTag tag = ReadTag();
+            object value = ReadValue();
+
             SkipWhitespace();
 
             if (CanRead())
                 throw new NbtJsonException("Trailing data found");
 
-            return tag;
+            return value;
         }
 
         /// <summary>
