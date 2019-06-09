@@ -44,7 +44,7 @@ namespace McFuncCompiler.Parser.ParseFilters.If
         public int ParseNot(List<Argument> arguments)
         {
             int i;
-            for (i = 1; i < arguments.Count; i++)
+            for (i = 0; i < arguments.Count; i++)
             {
                 var argument = arguments[i];
 

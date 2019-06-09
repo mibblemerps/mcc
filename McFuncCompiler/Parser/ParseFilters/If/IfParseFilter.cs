@@ -26,6 +26,9 @@ namespace McFuncCompiler.Parser.ParseFilters.If
             if (command.GetCommandName() != "if")
                 return command;
 
+            // Remove the command name to make working with the arguments easier
+            command.Arguments.RemoveAt(0);
+
             // Split if statement into individual conditions by seperating them at "&&"
             List<List<Argument>> ifConditionArguments = new List<List<Argument>> { new List<Argument>() };
             int pieceIndex = 0;
