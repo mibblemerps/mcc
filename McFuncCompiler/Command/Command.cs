@@ -43,5 +43,17 @@ namespace McFuncCompiler.Command
 
             return Arguments[0].GetAsText();
         }
+
+        public string Compile(BuildEnvironment env)
+        {
+            var builder = new StringBuilder();
+
+            foreach (Argument argument in Arguments)
+            {
+                builder.Append(argument.Compile(env) + " ");
+            }
+
+            return builder.ToString().Substring(0, builder.Length - 1);
+        }
     }
 }

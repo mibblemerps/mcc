@@ -59,7 +59,7 @@
   <ItemGroup>
     <Compile Include="ConstantParseFilterTest.cs" />
     <Compile Include="FunctionBlockParseFilterTest.cs" />
-    <Compile Include="IfCommandTest.cs" />
+    <Compile Include="IfCompileTest.cs" />
     <Compile Include="IfParseFilterTest.cs" />
     <Compile Include="JsonImportParseFilterTest.cs" />
     <Compile Include="NbtJsonCompilerTest.cs" />

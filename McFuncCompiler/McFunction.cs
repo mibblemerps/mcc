@@ -26,7 +26,6 @@ namespace McFuncCompiler
         {
             new DefineConstantCommand(),
             new SetVariableCommand(),
-            new IfCommand(),
             new ImportCommand()
         };
 

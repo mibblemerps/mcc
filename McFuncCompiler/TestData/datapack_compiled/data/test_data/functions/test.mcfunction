@@ -1,6 +1,5 @@
 # File test_data:test 
 execute if score var1 globals matches 0 run function test_data:_subs/globals_0
-say Globals!!
 say Hello world
 say Compiler version 0.1
 scoreboard players set @s points 0

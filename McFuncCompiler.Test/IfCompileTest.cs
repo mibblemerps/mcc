@@ -12,18 +12,13 @@ using NUnit.Framework;
 namespace McFuncCompiler.Test
 {
     [TestFixture]
-    public class IfCommandTest
+    public class IfCompileTest
     {
-        private IfCommand _ifCommand;
         private BuildEnvironment _env;
-        private Command.Command _successCommand;
 
-        public IfCommandTest()
+        public IfCompileTest()
         {
-            _ifCommand = new IfCommand();
             _env = new BuildEnvironment(null);
-
-            _successCommand = new Command.Command("test");
         }
 
         [Test]
@@ -60,17 +55,8 @@ namespace McFuncCompiler.Test
 
         protected string CreateIfCommand(params Condition[] conditions)
         {
-            var command = new Command.Command();
-            command.Arguments.Add(new Argument(new IfToken(conditions.ToList(), _successCommand)));
-
-            command = _ifCommand.Apply(_env, command).AddCommands.FirstOrDefault();
-            Assert.That(command, Is.Not.Null, "If statement didn't parse");
-
-            StringBuilder builder = new StringBuilder();
-            foreach (Argument argument in command.Arguments)
-                builder.Append(argument.Compile(_env) + " ");
-
-            return builder.ToString().Substring(0, builder.Length - 1);
+            IfToken token = new IfToken(new List<Condition>(conditions));
+            return token.Compile(_env) + " test";
         }
     }
 }

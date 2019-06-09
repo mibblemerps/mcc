@@ -71,7 +71,8 @@ namespace McFuncCompiler.Parser.ParseFilters.If
             
             // Replace existing command with an if token
             command.Arguments.Clear();
-            command.Arguments.Add(new Argument(new IfToken(conditions, successCommand)));
+            command.Arguments.Add(new Argument(new IfToken(conditions)));
+            command.Arguments.AddRange(successCommand.Arguments);
 
             return command;
         }

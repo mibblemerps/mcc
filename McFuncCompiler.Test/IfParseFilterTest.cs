@@ -28,9 +28,6 @@ namespace McFuncCompiler.Test
             IfToken token = output.Arguments[0].Tokens[0] as IfToken;
             Assert.That(token, Is.Not.Null);
 
-            Assert.That(token.Command.GetCommandName(), Is.EqualTo("say"));
-            Assert.That(token.Command.Arguments[1].GetAsText(), Is.EqualTo("test"));
-
             Assert.That(token.Conditions[0].Not, Is.False);
             Assert.That(token.Conditions[0], Is.InstanceOf(typeof(MatchesCondition)));
 
@@ -48,9 +45,6 @@ namespace McFuncCompiler.Test
 
             IfToken token = output.Arguments[0].Tokens[0] as IfToken;
             Assert.That(token, Is.Not.Null);
-
-            Assert.That(token.Command.GetCommandName(), Is.EqualTo("say"));
-            Assert.That(token.Command.Arguments[1].GetAsText(), Is.EqualTo("test"));
 
             Assert.That(token.Conditions[0].Not, Is.False);
             Assert.That(token.Conditions[0], Is.InstanceOf(typeof(OperationCondition)));

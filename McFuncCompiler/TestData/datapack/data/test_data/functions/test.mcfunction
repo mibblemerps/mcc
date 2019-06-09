@@ -1,9 +1,7 @@
 # Test
 define compiled_header File {file}
 
-define local1 Local
 import test_data:globals
-say #global1
 
 say `test_data:string.txt`
 say Compiler version #mcfunc_compiler_version
