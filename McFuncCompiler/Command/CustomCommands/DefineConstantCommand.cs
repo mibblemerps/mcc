@@ -6,7 +6,7 @@ namespace McFuncCompiler.Command.CustomCommands
     /// <summary>
     /// Command for defining constants in user code.
     /// </summary>
-    public class DefineConstant : ICustomCommand
+    public class DefineConstantCommand : ICustomCommand
     {
         public bool CompilerOnly => true;
 

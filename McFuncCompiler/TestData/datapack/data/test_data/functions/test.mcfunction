@@ -32,13 +32,15 @@ $var = null
 
 points$mitchfizz05 = 69
 
+if $tier < data$pending_tier say Pending tier!
+
 give @s #standard_sword 1
 
 summon minecraft:villager ~ ~ ~ `test_data:villager.nbt`
 
 execute as @a run tellraw @s `test_data:hello.json`
 
-execute if score tier data matches 4.. run (
+if not bb$tier 2.. (
 	$aaaa = 1
 	say test
 	

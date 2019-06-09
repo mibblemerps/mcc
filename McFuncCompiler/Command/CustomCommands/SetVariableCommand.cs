@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace McFuncCompiler.Command.CustomCommands
 {
-    public class SetVariable : ICustomCommand
+    public class SetVariableCommand : ICustomCommand
     {
         public bool CompilerOnly => false;
         

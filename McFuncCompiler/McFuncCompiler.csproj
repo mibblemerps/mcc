@@ -52,12 +52,14 @@
     <Compile Include="Command\Argument.cs" />
     <Compile Include="Command\Command.cs" />
     <Compile Include="Command\CustomCommands\ApplyResult.cs" />
-    <Compile Include="Command\CustomCommands\DefineConstant.cs" />
+    <Compile Include="Command\CustomCommands\DefineConstantCommand.cs" />
     <Compile Include="Command\CustomCommands\ICustomCommand.cs" />
-    <Compile Include="Command\CustomCommands\SetVariable.cs" />
+    <Compile Include="Command\CustomCommands\IfCommand.cs" />
+    <Compile Include="Command\CustomCommands\SetVariableCommand.cs" />
     <Compile Include="Command\Tokens\CloseFunctionBlockToken.cs" />
     <Compile Include="Command\Tokens\ConstantToken.cs" />
     <Compile Include="Command\Tokens\DefineConstantToken.cs" />
+    <Compile Include="Command\Tokens\IfToken.cs" />
     <Compile Include="Command\Tokens\IToken.cs" />
     <Compile Include="Command\Tokens\JsonImportToken.cs" />
     <Compile Include="Command\Tokens\OpenFunctionBlockToken.cs" />
@@ -73,6 +75,10 @@
     <Compile Include="Parser\NbtJson\NbtString.cs" />
     <Compile Include="Parser\ParseFilters\ConstantParseFilter.cs" />
     <Compile Include="Parser\ParseFilters\FunctionBlockParseFilter.cs" />
+    <Compile Include="Parser\ParseFilters\If\Condition.cs" />
+    <Compile Include="Parser\ParseFilters\If\IfParseFilter.cs" />
+    <Compile Include="Parser\ParseFilters\If\MatchesCondition.cs" />
+    <Compile Include="Parser\ParseFilters\If\OperationCondition.cs" />
     <Compile Include="Parser\ParseFilters\IParseFilter.cs" />
     <Compile Include="Parser\ParseFilters\JsonImportParseFilter.cs" />
     <Compile Include="Parser\Parser.cs" />

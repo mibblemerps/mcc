@@ -3,6 +3,7 @@ using System.IO;
 using McFuncCompiler.Command;
 using McFuncCompiler.Command.Tokens;
 using McFuncCompiler.Parser.ParseFilters;
+using McFuncCompiler.Parser.ParseFilters.If;
 
 namespace McFuncCompiler.Parser
 {
@@ -15,7 +16,8 @@ namespace McFuncCompiler.Parser
         {
             new ConstantParseFilter(),
             new JsonImportParseFilter(),
-            new FunctionBlockParseFilter()
+            new FunctionBlockParseFilter(),
+            new IfParseFilter()
         };
 
         public Parser(BuildEnvironment env)

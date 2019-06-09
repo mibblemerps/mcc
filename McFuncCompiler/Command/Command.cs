@@ -26,6 +26,11 @@ namespace McFuncCompiler.Command
             }
         }
 
+        public Command(List<Argument> args)
+        {
+            Arguments = args;
+        }
+
         /// <summary>
         /// Get the name of the command.<br />
         /// This requires the first token to be a <see cref="TextToken"/>.

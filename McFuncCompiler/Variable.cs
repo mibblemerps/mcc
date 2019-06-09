@@ -25,6 +25,9 @@ namespace McFuncCompiler
         public static Variable Parse(string str)
         {
             Match match = Regex.Match(str, VarRegex);
+            if (!match.Success)
+                return null;
+
             string scoreboard = match.Groups[1].Value;
             string name = match.Groups[2].Value;
 

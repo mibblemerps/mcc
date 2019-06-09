@@ -24,8 +24,9 @@ namespace McFuncCompiler
 
         private static List<ICustomCommand> CustomCommands = new List<ICustomCommand>
         {
-            new DefineConstant(),
-            new SetVariable()
+            new DefineConstantCommand(),
+            new SetVariableCommand(),
+            new IfCommand()
         };
 
         private const int FunctionBlockNestingLimit = 1000;
