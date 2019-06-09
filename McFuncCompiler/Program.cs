@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections;
+using System.Diagnostics;
+using System.Reflection;
+using CommandLine;
 
 namespace McFuncCompiler
 {
@@ -8,28 +12,27 @@ namespace McFuncCompiler
 
         static void Main(string[] args)
         {
-            var env = new BuildEnvironment("../../TestData/datapack");
-            env.OutputPath = "../../TestData/datapack_compiled";
-            env.Constants.Add("mcfunc_compiler_version", Version.ToString(2));
+#if DEBUG
+            if (args.Length == 0)
+            {
+                Console.WriteLine("[DEBUG] Pleae enter arguments...");
+                Console.Write("> ");
+                args = Console.ReadLine().Split(' ');
+            }
+#endif
 
-            DateTime startParse = DateTime.UtcNow;
+            CommandLine.Parser.Default.ParseArguments<Options.CompileDatapack, Options.CompileFile>(args)
+                .WithParsed<Options.CompileDatapack>(CompileDatapack.Compile)
+                .WithParsed<Options.CompileFile>(CompileFile);
 
-            var parser = new Parser.Parser(env);
-            McFunction mcFunction = parser.Parse("test_data:test");
-
-            TimeSpan parseTime = DateTime.UtcNow - startParse;
-            Logger.Info($"Parsed in {parseTime.Milliseconds}ms.");
-
-            DateTime startCompile = DateTime.UtcNow;
-
-            mcFunction.Compile(env);
-
-            TimeSpan compileTime = DateTime.UtcNow - startCompile;
-            Logger.Info($"Compiled in {compileTime.Milliseconds}ms.");
-
-            mcFunction.Save(env);
-
+#if DEBUG
             Console.ReadKey(true);
+#endif
+        }
+
+        static void CompileFile(Options.CompileFile options)
+        {
+            Console.WriteLine("Feature not yet implemented.");
         }
     }
 }

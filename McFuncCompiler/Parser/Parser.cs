@@ -31,7 +31,6 @@ namespace McFuncCompiler.Parser
             {
                 // Load file from path in build environment
                 string path = Environment.GetPath(id, "mcfunction");
-                Logger.Debug($"Loading mcfunction file from \"{path}\"...");
                 code = File.ReadAllText(path);
             }
 

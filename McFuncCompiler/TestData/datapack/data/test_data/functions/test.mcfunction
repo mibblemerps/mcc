@@ -16,8 +16,6 @@ define standard_sword iron_sword`test_data:sword.nbt`
 scoreboard players set @s points 0 
 scoreboard objectives add points dummy "Total Points"
 
-give mitchfizz05 iron_sword`test_data:sword.nbt` 1
-
 $var = 50
 $var += 10
 $var -= 5
