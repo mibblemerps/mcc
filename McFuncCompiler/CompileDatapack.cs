@@ -81,7 +81,7 @@ namespace McFuncCompiler
             {
                 string localPath = path.Substring(env.Path.Length).Replace('\\', '/');
 
-                Match match = Regex.Match(localPath, @"^\/data\/([^\/?<>\\:*|""]+)\/functions\/([^\/?<>\\:*|""]+)\.mcfunction$");
+                Match match = Regex.Match(localPath, @"^\/data\/([^\/?<>\\:*|""]+)\/functions\/([^?<>\\:*|""]+)\.mcfunction$");
                 if (!match.Success)
                     continue;
 
