@@ -17,7 +17,8 @@ namespace McFuncCompiler.Parser
             new ConstantParseFilter(),
             new JsonImportParseFilter(),
             new FunctionBlockParseFilter(),
-            new IfParseFilter()
+            new IfParseFilter(),
+            new DefineConstantParseFilter()
         };
 
         public Parser(BuildEnvironment env)

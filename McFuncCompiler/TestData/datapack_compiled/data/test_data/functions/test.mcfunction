@@ -1,4 +1,4 @@
-# File test_data:test 
+# Compiled test_data:test at 2019-06-09 16:06 by McFuncCompiler
 execute if score var1 globals matches 0 run function test_data:_subs/globals_0
 say Hello world
 say Compiler version 0.1
@@ -7,8 +7,8 @@ scoreboard objectives add points dummy "Total Points"
 scoreboard players set var globals 50
 scoreboard players add var globals 10
 scoreboard players remove var globals 5
-say 3333
-scoreboard players set var globals 3333
+say 3333  
+scoreboard players set var globals
 scoreboard players reset var globals
 scoreboard players set mitchfizz05 points 69
 execute if score tier globals < pending_tier data run say Pending tier!

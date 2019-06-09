@@ -28,6 +28,9 @@ namespace McFuncCompiler.Command
             foreach (IToken token in Tokens)
                 builder.Append(token.Compile(env));
 
+            if (builder.Length == 0)
+                return null;
+
             return builder.ToString();
         }
 

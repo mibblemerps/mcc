@@ -24,7 +24,6 @@ namespace McFuncCompiler
 
         private static List<ICustomCommand> CustomCommands = new List<ICustomCommand>
         {
-            new DefineConstantCommand(),
             new SetVariableCommand(),
             new ImportCommand()
         };
@@ -105,13 +104,10 @@ namespace McFuncCompiler
             // Compile commands
             foreach (Command.Command command in Commands)
             {
-                var argBuilder = new StringBuilder();
-                foreach (Argument arg in command.Arguments)
-                {
-                    argBuilder.Append(arg.Compile(env) + " ");
-                }
+                string compiled = command.Compile(env);
 
-                builder.Append(argBuilder.ToString().Trim() + "\n");
+                if (compiled != null)
+                    builder.Append(compiled + "\n");
             }
 
             _compiled = builder.ToString();

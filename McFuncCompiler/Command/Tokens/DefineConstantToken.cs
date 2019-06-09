@@ -9,9 +9,9 @@ namespace McFuncCompiler.Command.Tokens
     public class DefineConstantToken : IToken
     {
         public string Name { get; set; }
-        public string Value { get; set; }
+        public Argument Value { get; set; }
 
-        public DefineConstantToken(string name, string value)
+        public DefineConstantToken(string name, Argument value)
         {
             Name = name;
             Value = value;
@@ -19,8 +19,8 @@ namespace McFuncCompiler.Command.Tokens
 
         public string Compile(BuildEnvironment env)
         {
-            env.Constants[Name] = Value;
-            return "";
+            env.Constants[Name] = Value.Compile(env);
+            return null;
         }
     }
 }

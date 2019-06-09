@@ -50,8 +50,13 @@ namespace McFuncCompiler.Command
 
             foreach (Argument argument in Arguments)
             {
-                builder.Append(argument.Compile(env) + " ");
+                string compiled = argument.Compile(env);
+                if (compiled != null)
+                    builder.Append(compiled + " ");
             }
+
+            if (builder.Length == 0)
+                return null;
 
             return builder.ToString().Substring(0, builder.Length - 1);
         }
