@@ -1,15 +1,12 @@
 # Test
-setblock ~ ~ ~ air
-
-say `test_data:string.txt`
-
-define test Hello.
-
 define compiled_header File {file}
 
-say Hello world
+define local1 Local
+import test_data:globals
+say #global1
+
+say `test_data:string.txt`
 say Compiler version #mcfunc_compiler_version
-say #test
 
 define standard_sword iron_sword`test_data:sword.nbt`
 

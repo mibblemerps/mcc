@@ -1,9 +1,8 @@
 # File test_data:test 
-setblock ~ ~ ~ air
-say Hello world
+execute if score var1 globals matches 0 run function test_data:_subs/globals_0
+say Globals!!
 say Hello world
 say Compiler version 0.1
-say Hello.
 scoreboard players set @s points 0
 scoreboard objectives add points dummy "Total Points"
 scoreboard players set var globals 50

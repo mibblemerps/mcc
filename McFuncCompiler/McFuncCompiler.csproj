@@ -68,6 +68,7 @@
     <Compile Include="Command\CustomCommands\DefineConstantCommand.cs" />
     <Compile Include="Command\CustomCommands\ICustomCommand.cs" />
     <Compile Include="Command\CustomCommands\IfCommand.cs" />
+    <Compile Include="Command\CustomCommands\ImportCommand.cs" />
     <Compile Include="Command\CustomCommands\SetVariableCommand.cs" />
     <Compile Include="Command\Tokens\CloseFunctionBlockToken.cs" />
     <Compile Include="Command\Tokens\ConstantToken.cs" />

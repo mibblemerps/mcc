@@ -26,7 +26,8 @@ namespace McFuncCompiler
         {
             new DefineConstantCommand(),
             new SetVariableCommand(),
-            new IfCommand()
+            new IfCommand(),
+            new ImportCommand()
         };
 
         private const int FunctionBlockNestingLimit = 1000;
@@ -41,7 +42,12 @@ namespace McFuncCompiler
             Id = id;
         }
 
-        public void Compile(BuildEnvironment env)
+        /// <summary>
+        /// Compile MCFunction.
+        /// </summary>
+        /// <param name="env">Build environment</param>
+        /// <param name="generateOutput">Should a text output be generated?</param>
+        public void Compile(BuildEnvironment env, bool generateOutput = true)
         {
             // Apply custom commands
             var toRemove = new List<Command.Command>();
@@ -77,8 +83,11 @@ namespace McFuncCompiler
             // Split function blocks into seperate McFunctions
             SplitFunctionBlocks(env);
 
-            // Compile to vanilla MCFunction file
-            GenerateMcFunction(env);
+            if (generateOutput)
+            {
+                // Compile to vanilla MCFunction file
+                GenerateMcFunction(env);
+            }
         }
 
         public string GenerateMcFunction(BuildEnvironment env)
