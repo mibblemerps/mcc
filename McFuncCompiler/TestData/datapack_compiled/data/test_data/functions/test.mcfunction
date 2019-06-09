@@ -2,7 +2,7 @@
 setblock ~ ~ ~ air
 say Hello world
 say Hello world
-say Compiler version <Unknown constant: mcfunc_compiler_version>
+say Compiler version 0.1
 say Hello.
 scoreboard players set @s points 0
 scoreboard objectives add points dummy "Total Points"

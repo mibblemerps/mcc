@@ -8,7 +8,17 @@ namespace McFuncCompiler
 {
     class Program
     {
-        public static readonly Version Version = new Version(0, 1);
+        /// <summary>
+        /// Informational version from the assembly.
+        /// </summary>
+        public static string VersionName;
+
+        static Program()
+        {
+            Assembly asm = Assembly.GetExecutingAssembly();
+            FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(asm.Location);
+            VersionName = versionInfo.ProductVersion;
+        }
 
         static void Main(string[] args)
         {
